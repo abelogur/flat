@@ -13,4 +13,9 @@ public class Flat {
     public boolean equals(Object o) {
         return this.number == ((Flat) o).getNumber();
     }
+
+    @Override
+    public String toString() {
+        return number + " " + price;
+    }
 }
