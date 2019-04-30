@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -16,7 +15,6 @@ public class FlatClient {
     private final OkHttpClient client = new OkHttpClient();
     private final Request request;
 
-    @SneakyThrows
     public FlatClient() {
         RequestBody requestBody = new FormBody.Builder()
                 .add("sql1", "")
@@ -35,13 +33,10 @@ public class FlatClient {
                 .build();
     }
 
+    @SneakyThrows
     public List<Flat> getFlats() {
-        try (Response response = client.newCall(request).execute()) {
-            assert response.body() != null;
-            return new FlatParser(response.body().string()).parseFlats();
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-            throw new RuntimeException(e.getMessage());
-        }
+        Response response = client.newCall(request).execute();
+        assert response.body() != null;
+        return new FlatParser(response.body().string()).parseFlats();
     }
 }

@@ -2,7 +2,6 @@ package com.artur.belogur.flatclient;
 
 import com.artur.belogur.Flat;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,7 +17,6 @@ public class FlatParser {
 
     private final String html;
 
-    @SneakyThrows
     public List<Flat> parseFlats() {
         Document document = Jsoup.parse(html);
         return document.getElementsByClass("b-perebor__row").stream()

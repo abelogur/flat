@@ -1,12 +1,14 @@
 package com.artur.belogur;
 
-import com.artur.belogur.flatclient.FlatClient;
+import com.artur.belogur.repository.FlatRepository;
 
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        List<Flat> flats = new FlatClient().getFlats();
+        FlatRepository flatRepository = new FlatRepository();
+        List<Flat> freeFlat = flatRepository.getFreeFlats();
+        List<Flat> desiredFlat = flatRepository.getDesiredFlats();
     }
 }
