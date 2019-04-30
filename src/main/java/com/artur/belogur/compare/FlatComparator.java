@@ -3,6 +3,7 @@ package com.artur.belogur.compare;
 import com.artur.belogur.Flat;
 import com.artur.belogur.repository.FlatRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,5 +52,18 @@ public class FlatComparator {
         return desiredFlats.stream()
                 .filter(flat -> !inputFlats.contains(flat))
                 .collect(Collectors.toList());
+    }
+
+    public List<FlatPriceDiff> getDiffPrices() {
+        List<FlatPriceDiff> result = new ArrayList<>();
+        for (Flat oldFlat : desiredFlats) {
+            int index = inputFlats.indexOf(oldFlat);
+            if (index != -1) {
+                int newPrice = inputFlats.get(index).getPrice();
+                FlatPriceDiff diff = new FlatPriceDiff(oldFlat.getNumber(), oldFlat.getPrice(), newPrice);
+                result.add(diff);
+            }
+        }
+        return result;
     }
 }

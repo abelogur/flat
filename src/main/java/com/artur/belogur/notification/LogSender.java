@@ -33,6 +33,7 @@ public class LogSender implements Notifiable {
 
     @Override
     public void sendPriceInfo(List<FlatPriceDiff> priceDiffs) {
+        if (priceDiffs.size() == 0) return;
         priceDiffs.forEach(diff ->
                 log.info("Flat number: {}. {} -> {}", diff.getNumber(), diff.getOldPrice(), diff.getNewPrice()));
     }

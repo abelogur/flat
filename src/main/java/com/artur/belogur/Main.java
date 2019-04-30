@@ -30,6 +30,8 @@ public class Main {
         if (!comparator.allDesiredIncluded()) {
             sender.sendDesiredFlatInfo(getFlatsPrice(comparator.getNotIncludedDesired()));
         }
+
+        sender.sendPriceInfo(comparator.getDiffPrices());
     }
 
     private static List<Integer> getFlatsPrice(List<Flat> flats) {
