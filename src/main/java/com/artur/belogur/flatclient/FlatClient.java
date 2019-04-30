@@ -1,10 +1,12 @@
 package com.artur.belogur.flatclient;
 
+import com.artur.belogur.Flat;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 public class FlatClient {
@@ -33,9 +35,10 @@ public class FlatClient {
                 .build();
     }
 
-    public String getFlats() {
+    public List<Flat> getFlats() {
         try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
+            assert response.body() != null;
+            return new FlatParser(response.body().string()).parseFlats();
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage());
