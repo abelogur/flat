@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="TRACE" name="reactive" monitorInterval="30">
+<Configuration status="info" name="reactive" monitorInterval="30">
     <Properties>
-        <Property name="logDir">/var/log/reactive/${date:yyyy_MM_dd_HH_mm_ss}</Property>
-        <Property name="logFile">${logDir}/reactive.log</Property>
-        <Property name="logPattern">${logDir}/reactive-%i.log.gz</Property>
+        <!--<Property name="logDir">/var/log/reactive/${date:yyyy_MM_dd_HH_mm_ss}</Property>-->
+        <!--<Property name="logFile">${logDir}/reactive.log</Property>-->
+        <!--<Property name="logPattern">${logDir}/reactive-%i.log.gz</Property>-->
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%date [%thread] %-5level %logger{35} - %msg%n"/>
         </Console>
-        <RollingFile name="RollingFile" fileName="${logFile}_000" filePattern="${logPattern}" ignoreExceptions="false">
-            <PatternLayout pattern="%date [%thread] %-5level %logger{35} - %msg%n" />
-            <Policies>
-                <SizeBasedTriggeringPolicy size="50MB" />
-            </Policies>
-        </RollingFile>
+        <!--<RollingFile name="RollingFile" fileName="${logFile}_000" filePattern="${logPattern}" ignoreExceptions="false">-->
+            <!--<PatternLayout pattern="%date [%thread] %-5level %logger{35} - %msg%n" />-->
+            <!--<Policies>-->
+                <!--<SizeBasedTriggeringPolicy size="50MB" />-->
+            <!--</Policies>-->
+        <!--</RollingFile>-->
 
         <!--<Async name="AsyncFile"><AppenderRef ref="RollingFile" /></Async>-->
         <Async name="AsyncConsole"><AppenderRef ref="Console" /></Async>
@@ -24,7 +24,7 @@
         <Root level="info">
             <AppenderRef ref="AsyncConsole" />
         </Root>
-        <Logger name="com.example" level="info" additivity="false">
+        <Logger name="com.artur.belogur" level="info" additivity="false">
             <AppenderRef ref="AsyncConsole" />
         </Logger>
     </Loggers>
