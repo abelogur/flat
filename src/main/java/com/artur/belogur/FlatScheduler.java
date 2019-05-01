@@ -29,7 +29,7 @@ public class FlatScheduler {
 
     public void run() {
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(wrappedTask(), 0, 5, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(wrappedTask(), 0, 12, TimeUnit.HOURS);
     }
 
     private Runnable wrappedTask() {
