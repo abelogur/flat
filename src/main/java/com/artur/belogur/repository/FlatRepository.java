@@ -6,8 +6,8 @@ import lombok.SneakyThrows;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FlatRepository {
@@ -35,9 +35,12 @@ public class FlatRepository {
     private List<Flat> getFlatsAsLine(String fileName) {
         File file = getFileFromResources(fileName);
         @Cleanup BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        return Arrays.stream(bufferedReader.readLine().split("; "))
-                .map(this::mapFlat)
-                .collect(Collectors.toList());
+        String data = bufferedReader.readLine();
+        return data == null ?
+                Collections.EMPTY_LIST :
+                Arrays.stream(data.split("; "))
+                        .map(this::mapFlat)
+                        .collect(Collectors.toList());
     }
 
     private Flat mapFlat(String flatAsString) {
@@ -57,9 +60,12 @@ public class FlatRepository {
         writer.write(flatsAsString);
     }
 
+    @SneakyThrows
     private File getFileFromResources(String fileName) {
-        return Optional.ofNullable(getClass().getClassLoader().getResource(fileName))
-                .map(url -> new File(url.getFile()))
-                .orElseThrow(() -> new IllegalArgumentException("File " + fileName + " doesn't exist"));
+        File file = new File(fileName);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        return file;
     }
 }
