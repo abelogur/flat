@@ -16,6 +16,7 @@
         <junit.version>4.12</junit.version>
         <okhttp.version>3.14.1</okhttp.version>
         <jsoup.version>1.11.3</jsoup.version>
+        <telegrambots.version>4.2</telegrambots.version>
     </properties>
 
     <dependencies>
@@ -87,6 +88,11 @@
             <version>${jsoup.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>${telegrambots.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

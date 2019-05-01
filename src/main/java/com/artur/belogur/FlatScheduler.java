@@ -5,6 +5,8 @@ import com.artur.belogur.compare.FlatPriceDiff;
 import com.artur.belogur.flatclient.FlatClient;
 import com.artur.belogur.notification.LogSender;
 import com.artur.belogur.notification.Notifiable;
+import com.artur.belogur.notification.SendersHolder;
+import com.artur.belogur.notification.TelegramSender;
 import com.artur.belogur.repository.FlatRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,6 +18,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class FlatScheduler {
+
+    private final SendersHolder sendersHolder;
+
+    public FlatScheduler() {
+        Notifiable telegramSender = new TelegramSender();
+        Notifiable logSender = new LogSender();
+        this.sendersHolder = new SendersHolder(telegramSender, logSender);
+    }
 
     public void run() {
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -41,20 +51,18 @@ public class FlatScheduler {
             FlatRepository flatRepository = new FlatRepository();
             FlatComparator comparator = new FlatComparator(flatRepository, inputFlats);
 
-            Notifiable sender = new LogSender();
-
             if (comparator.inputFreeEqual()) {
-                sender.sendFlatNumberNotChanged();
+                sendersHolder.sendFlatNumberNotChanged();
             } else {
-                sender.sendFreeFlatInfo(comparator.inputFreeMore(), getFlatsPrice(comparator.getFreeDiff()));
+                sendersHolder.sendFreeFlatInfo(comparator.inputFreeMore(), getFlatsPrice(comparator.getFreeDiff()));
             }
 
             if (!comparator.allDesiredIncluded()) {
-                sender.sendDesiredFlatInfo(getFlatsPrice(comparator.getNotIncludedDesired()));
+                sendersHolder.sendDesiredFlatInfo(getFlatsPrice(comparator.getNotIncludedDesired()));
             }
 
             List<FlatPriceDiff> flatPriceDiffs = comparator.getDiffPrices();
-            sender.sendPriceInfo(flatPriceDiffs.stream()
+            sendersHolder.sendPriceInfo(flatPriceDiffs.stream()
                     .filter(flatPriceDiff -> flatPriceDiff.getOldPrice() != flatPriceDiff.getNewPrice())
                     .collect(Collectors.toList()));
 
