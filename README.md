@@ -1,5 +1,5 @@
 - [ ] Смарт часы Galaxy Watch6 Classic 
-- [ ] Xbox Elite Wireless Controller Series 2
+- [ ] Xbox Elite Wireless Controller Series 2. [Preview](https://www.xbox.com/en-US/accessories/controllers/elite-wireless-controller-series-2)
 - [ ] Книга Bloodborne 
 - [ ] Билет в Ташкент на самолет и поездка со мной (типо самописного подарочного ваучера 😂)
 - [ ] Помощь с ВНЖ
